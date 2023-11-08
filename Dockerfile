@@ -1,5 +1,5 @@
 # Используем базовый образ с Python 3.8
-FROM python:3.8
+FROM python:3.9
 
 # Копируем requirements.txt в контейнер
 COPY requirements.txt /app/requirements.txt
