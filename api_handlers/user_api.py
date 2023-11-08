@@ -2,14 +2,16 @@ import requests
 
 
 class UserAPI:
+    def __init__(self, base_url, message):
+        self.base_url = base_url
+        self.message = message
 
-    @staticmethod
-    def add_new_user(message):
-        url = "http://127.0.0.1:8000/api/add-person/"
+    def add_new_user(self):
+        url = f"{self.base_url}/api/add-person/"
 
         data = {
-            "username": message.from_user.username,
-            "telegram_id": message.from_user.id,
+            "username": self.message.from_user.username,
+            "telegram_id": self.message.from_user.id,
         }
 
         response = requests.post(url, json=data)
