@@ -4,11 +4,14 @@ from dotenv import load_dotenv
 from aiogram import Router
 from aiogram.types import Message
 from aiogram.filters import CommandStart, Command
+import asyncio
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from api_handlers.user_api import UserAPI
 
 load_dotenv()
 
+scheduler = AsyncIOScheduler()
 router = Router()
 
 
@@ -30,3 +33,13 @@ async def help_user(message: Message):
     /get_debt_info - get info about your debts\n
     /return_debt - return your debt\n
     """)
+
+
+async def keep_bot_active():
+    await asyncio.sleep(0.1)
+
+
+@router.message(Command("die"))
+async def die(message: Message):
+    scheduler.add_job(keep_bot_active, 'interval', seconds=15)
+    scheduler.start()
